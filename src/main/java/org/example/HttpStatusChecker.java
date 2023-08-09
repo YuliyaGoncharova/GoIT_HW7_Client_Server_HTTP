@@ -11,7 +11,7 @@ public class HttpStatusChecker {
     public String getStatusImage(int code) throws IOException, InterruptedException {
         String imageUrl = "https://http.cat/" + code + ".jpg";
 
-        try {
+
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -24,14 +24,7 @@ public class HttpStatusChecker {
         int responceStatusCode = response.statusCode();
 
         if (responceStatusCode == 404) {
-            System.out.println("There is no image for HTTP status " + code);
-        }
-    } catch (IOException e) {
-            try {
-                throw new Exception("Error while checking for image availability: " + e.getMessage());
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            throw new IOException("There is no picture for status code " + code);
         }
 
         return imageUrl;
